@@ -1,2 +1,3 @@
 # Nano Toolkit
-The toolkit you're looking for
+
+A collection of tools to help you write filters
