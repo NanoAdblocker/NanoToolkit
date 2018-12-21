@@ -169,24 +169,24 @@ button {
     padding: 10px;
 }
 
+    .container.footer {
+        background-color: #FFFFFF;
+        margin: 0px;
+        padding-bottom: 0px;
+        padding-top: 0px;
+    }
+
+        .container.footer p {
+            color: #808080;
+            font-size: 0.8em;
+        }
+
 @media (min-width: 600px) {
     .container {
         padding-left: 10%;
         padding-right: 10%;
     }
 }
-
-.container.footer {
-    background-color: #FFFFFF;
-    margin: 0px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-}
-
-    .container.footer p {
-        color: #808080;
-        font-size: 0.8em;
-    }
 
 /* ----- Pagination -------------------------------------------------------- */
 
