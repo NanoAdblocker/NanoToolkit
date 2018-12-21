@@ -24,19 +24,16 @@ const CreateTextTransformEngine = (id, implementation) => {
 
         // ------------------------------------------------------------------------------------- //
 
-        const lines = $input.value.split("\n").map(x => x.trim());
+        const lines = $input.value.split("\n");
 
         const [out, warn] = implementation(lines);
 
         // ------------------------------------------------------------------------------------- //
 
-        out.sort();
-        warn.sort();
-
         const result = [];
 
         if (warn.length > 0) {
-            result.push("Could not process these lines:");
+            result.push("Warnings:");
             for (const w of warn)
                 result.push(w);
             result.push("");
@@ -75,27 +72,77 @@ TaskOnLoad.push(() => {
         const out = [];
         const warn = [];
 
-        for (const l of lines) {
-            if (l.length === 0)
+        for (const line of lines) {
+            line = line.trim();
+            if (line.length === 0)
                 continue;
 
-            const dom = reDomainExtract.exec(l);
+            const dom = reDomainExtract.exec(line);
 
             if (dom === null) {
-                warn.push(l);
+                warn.push('No link "' + line + '"');
                 continue;
             }
 
             out.push(dom[1].replace(reDomainCleanup, ""));
         }
 
-        return [out, warn];
+        return [out.sort(), warn];
 
     };
 
     // ----------------------------------------------------------------------------------------- //
 
     CreateTextTransformEngine("links-to-domains", handler);
+
+    // ----------------------------------------------------------------------------------------- //
+
+});
+
+// --------------------------------------------------------------------------------------------- //
+
+// Text Transform:  Merge Comma Separated Domain Array
+
+TaskOnLoad.push(() => {
+
+    // ----------------------------------------------------------------------------------------- //
+
+    const handler = (lines) => {
+
+        const set = new Set();
+        const out = [];
+        const warn = [];
+
+        for (let line of lines) {
+            line = line.trim();
+            if (line.length === 0)
+                continue;
+
+            for (let d of line.split(",")) {
+                d = d.trim();
+
+                if (d.length === 0 || !d.includes(".")) {
+                    warn.push('Invalid entry "' + d + '"');
+                    continue;
+                }
+
+                if (set.has(d)) {
+                    warn.push('Duplicate entry "' + d + '"');
+                    continue;
+                }
+
+                set.add(d);
+                out.push(d);
+            }
+        }
+
+        return [out.sort(), warn];
+
+    };
+
+    // ----------------------------------------------------------------------------------------- //
+
+    CreateTextTransformEngine("merge-domains", handler);
 
     // ----------------------------------------------------------------------------------------- //
 

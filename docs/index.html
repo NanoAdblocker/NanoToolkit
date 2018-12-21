@@ -41,9 +41,13 @@
 
         <h2>Text Transform: Links to Comma Separated Domain Array</h2>
 
+        <p>Output array is sorted but duplicates are not removed.</p>
+        <p>First link of each line will be extracted, extra text in front of links are ignored.</p>
+        <p>Warnings will be generated for lines that do not contain valid links.</p>
+
         <!-- ------------------------------------------------------------------------------------------------------ -->
 
-        <textarea placeholder="Paste links here..." spellcheck="false"></textarea>
+        <textarea placeholder="Paste here, one link per line..." spellcheck="false"></textarea>
         <br /><br />
         <button class="blue large">Transform</button>
         <br /><br />
@@ -64,9 +68,12 @@
 
         <h2>Text Transform: Merge Comma Separated Domain Array</h2>
 
+        <p>Output array is sorted. Duplicates and invalid entries are removed.</p>
+        <p>Warnings will be generated when entries are removed.</p>
+
         <!-- ------------------------------------------------------------------------------------------------------ -->
 
-        <textarea placeholder="Paste links here..." spellcheck="false"></textarea>
+        <textarea placeholder="Paste here, one array per line..." spellcheck="false"></textarea>
         <br /><br />
         <button class="blue large">Transform</button>
         <br /><br />
