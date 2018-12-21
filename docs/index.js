@@ -16,11 +16,15 @@ const CreateTextTransformEngine = (id, implementation) => {
 
     const $input = $container.querySelector(":scope > textarea");
     const $output = $container.querySelector(":scope > pre");
-    const $button = $container.querySelector(":scope > button");
+    const [$transform, $copy] = $container.querySelectorAll(":scope > button");
 
     // ----------------------------------------------------------------------------------------- //
 
-    $button.onclick = () => {
+    let output = "";
+
+    // ----------------------------------------------------------------------------------------- //
+
+    $transform.onclick = () => {
 
         // ------------------------------------------------------------------------------------- //
 
@@ -39,13 +43,27 @@ const CreateTextTransformEngine = (id, implementation) => {
             result.push("");
         }
 
+        output = out.join(",");
         result.push("Output:");
-        result.push(out.join(","));
+        result.push(output);
 
         $output.textContent = result.join("\n");
+        $copy.classList.remove("hidden");
 
         // ------------------------------------------------------------------------------------- //
 
+    };
+
+    // ----------------------------------------------------------------------------------------- //
+
+    $copy.onclick = () => {
+        const old = $input.value;
+        $input.value = output;
+
+        $input.select();
+        document.execCommand("copy");
+
+        $input.value = old;
     };
 
     // ----------------------------------------------------------------------------------------- //
@@ -72,7 +90,7 @@ TaskOnLoad.push(() => {
         const out = [];
         const warn = [];
 
-        for (const line of lines) {
+        for (let line of lines) {
             line = line.trim();
             if (line.length === 0)
                 continue;
