@@ -8,7 +8,7 @@ const TaskOnLoad = [];
 
 // --------------------------------------------------------------------------------------------- //
 
-const CreateTextTransformEngine = (id, implementation) => {
+const CreateTextTransform = (id, implementation) => {
 
     // ----------------------------------------------------------------------------------------- //
 
@@ -81,6 +81,8 @@ TaskOnLoad.push(() => {
     // There can be extra text before the link, so no start anchor
     const reDomainExtract = /https?:\/\/([^:/?#]+)/;
 
+    const reDomainDuplicate = /https?:.*?https?:/;
+
     const reDomainCleanup = /^www?\d*?\./;
 
     // ----------------------------------------------------------------------------------------- //
@@ -94,6 +96,9 @@ TaskOnLoad.push(() => {
             line = line.trim();
             if (line.length === 0)
                 continue;
+
+            if (reDomainDuplicate.test(line))
+                warn.push('Two links (second one ignored) "' + line + '"');
 
             const dom = reDomainExtract.exec(line);
 
@@ -111,7 +116,7 @@ TaskOnLoad.push(() => {
 
     // ----------------------------------------------------------------------------------------- //
 
-    CreateTextTransformEngine("links-to-domains", handler);
+    CreateTextTransform("links-to-domains", handler);
 
     // ----------------------------------------------------------------------------------------- //
 
@@ -131,10 +136,14 @@ TaskOnLoad.push(() => {
         const out = [];
         const warn = [];
 
+        let count = 0;
+
         for (let line of lines) {
             line = line.trim();
             if (line.length === 0)
                 continue;
+
+            count++;
 
             for (let d of line.split(",")) {
                 d = d.trim();
@@ -154,13 +163,16 @@ TaskOnLoad.push(() => {
             }
         }
 
+        if (count === 1)
+            warn.push("Only one array found!");
+
         return [out.sort(), warn];
 
     };
 
     // ----------------------------------------------------------------------------------------- //
 
-    CreateTextTransformEngine("merge-domains", handler);
+    CreateTextTransform("merge-domains", handler);
 
     // ----------------------------------------------------------------------------------------- //
 
