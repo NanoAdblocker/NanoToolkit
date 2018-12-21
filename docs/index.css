@@ -13,7 +13,6 @@ body {
 
 input[type="text"], textarea {
     border: none;
-    font-size: 1.2em;
     margin: 0px;
     width: 100%;
 }
@@ -49,6 +48,10 @@ pre {
 }
 
 @media (min-width: 600px) {
+    input[type="text"], textarea {
+        font-size: 1.2em;
+    }
+
     h1 {
         font-size: 3em;
     }
