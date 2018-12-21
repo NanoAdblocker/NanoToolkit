@@ -116,6 +116,10 @@ pre {
         clear: both;
     }
 
+    .navbar button {
+        height: 60px;
+    }
+
 @media (min-width: 600px) {
     .navbar > .left {
         margin-left: 10%;
@@ -124,10 +128,6 @@ pre {
     .navbar > .right {
         margin-right: 10%;
     }
-}
-
-.navbar button {
-    height: 60px;
 }
 
 /* ----- Buttons ----------------------------------------------------------- */
@@ -166,11 +166,11 @@ button {
         padding: 0px 15px;
     }
 
-    button.large {
-        height: 60px;
-        padding-left: 25px;
-        padding-right: 25px;
-    }
+        button.large {
+            height: 60px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
 }
 
 /* ----- Containers -------------------------------------------------------- */
