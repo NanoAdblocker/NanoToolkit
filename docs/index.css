@@ -22,34 +22,13 @@ textarea {
     resize: vertical;
 }
 
-input[type="checkbox"] {
-    background-color: #FFFFFF;
-    border: 2px solid #808080;
-    height: 20px;
-    margin: 5px;
-    width: 20px;
-}
-
-    input[type="checkbox"]:checked {
-        background-color: #3F3F3F;
-    }
-
-    input[type="checkbox"]:focus {
-        outline: none;
-    }
-
-    input[type="checkbox"] ~ label {
-        top: -9px;
-        position: relative;
-    }
-
 pre {
     overflow-x: auto;
 }
 
 @media (min-width: 600px) {
     input[type="text"], textarea {
-        font-size: 1.2em;
+        font-size: 1.25em;
     }
 
     h1 {
