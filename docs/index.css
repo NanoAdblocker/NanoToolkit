@@ -231,7 +231,7 @@ table {
     margin: 40px auto;
     opacity: 1;
     padding: 25px;
-    width: 60%;
+    width: 80%;
 }
 
     .popup h1, .popup h2, .popup h3, .popup h4, .popup h5, .popup h6 {
@@ -239,9 +239,9 @@ table {
         margin: 0px;
     }
 
-@media (max-width: 599px) {
+@media (min-width: 600px) {
     .popup {
-        width: 80%;
+        width: 60%;
     }
 }
 
