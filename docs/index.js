@@ -180,6 +180,66 @@ TaskOnLoad.push(() => {
 
 // --------------------------------------------------------------------------------------------- //
 
+// Text Transform:  Unmerge Comma Separated Domain Array
+
+TaskOnLoad.push(() => {
+
+    // ----------------------------------------------------------------------------------------- //
+
+    const handler = (lines) => {
+
+        const out = [];
+        const warn = [];
+
+        let count = 0;
+        let arr = null;
+
+        for (let line of lines) {
+            line = line.trim();
+            if (line.length === 0)
+                continue;
+
+            count++;
+
+            if (arr === null) {
+                arr = line.split(",");
+                arr = arr.map(x => x.trim());
+                continue;
+            }
+
+            for (let d of line.split(",")) {
+                d = d.trim();
+
+                const index = arr.indexOf(d);
+                if (index === -1) {
+                    warn.push('No entry "' + d + '"');
+                    continue;
+                }
+
+                arr.splice(index, 1);
+            }
+        }
+
+        if (count === 1)
+            warn.push("Only one array found!");
+
+        for (const d of arr)
+            out.push(d);
+
+        return [out.sort(), warn];
+
+    };
+
+    // ----------------------------------------------------------------------------------------- //
+
+    CreateTextTransform("unmerge-domains", handler);
+
+    // ----------------------------------------------------------------------------------------- //
+
+});
+
+// --------------------------------------------------------------------------------------------- //
+
 window.onload = () => {
     for (const f of TaskOnLoad)
         f();
