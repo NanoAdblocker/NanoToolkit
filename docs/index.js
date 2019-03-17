@@ -83,6 +83,7 @@ TaskOnLoad.push(() => {
 
     const reDomainDuplicate = /https?:.*?https?:/;
 
+    // TODO: What about "www.com" or similar domains?
     const reDomainCleanup = /^www?\d*?\./;
 
     // ----------------------------------------------------------------------------------------- //
@@ -182,6 +183,8 @@ TaskOnLoad.push(() => {
 
 // Text Transform:  Unmerge Comma Separated Domain Array
 
+// TODO: Quadratic running time, can this be optimized?
+
 TaskOnLoad.push(() => {
 
     // ----------------------------------------------------------------------------------------- //
@@ -223,8 +226,10 @@ TaskOnLoad.push(() => {
         if (count === 1)
             warn.push("Only one array found!");
 
-        for (const d of arr)
-            out.push(d);
+        if (count > 0) {
+            for (const d of arr)
+                out.push(d);
+        }
 
         return [out.sort(), warn];
 
