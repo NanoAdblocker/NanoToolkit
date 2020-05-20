@@ -133,9 +133,10 @@ TaskOnLoad.push(() => {
 
     const handler = (lines) => {
 
-        const set = new Set();
         const out = [];
         const warn = [];
+
+        const set = new Set();
 
         let count = 0;
 
@@ -238,6 +239,44 @@ TaskOnLoad.push(() => {
     // ------------------------------------------------------------------------------------------------------------- //
 
     CreateTextTransform("unmerge-domains", handler);
+
+    // ------------------------------------------------------------------------------------------------------------- //
+
+});
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
+// Text Transform:  Unicode Escape
+
+TaskOnLoad.push(() => {
+
+    // ------------------------------------------------------------------------------------------------------------- //
+
+    const handler = (lines) => {
+
+        const out = [];
+        const warn = [];
+
+        for (let line of lines) {
+            const chars = line.split("");
+
+            for (let i = 0; i < chars.length; i++) {
+                const code = chars[i].charCodeAt(0);
+
+                if (code > 0x7F)
+                    chars[i] = "\\u" + code.toString(16).padStart(4, "0").toUpperCase();
+            }
+
+            out.push(chars.join(""));
+        }
+
+        return [out, warn];
+
+    };
+
+    // ------------------------------------------------------------------------------------------------------------- //
+
+    CreateTextTransform("unicode-escape", handler);
 
     // ------------------------------------------------------------------------------------------------------------- //
 
