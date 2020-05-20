@@ -4,15 +4,15 @@
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
-const OnLoadTasks = [];
+const onLoadTasks = [];
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
-const DefaultTextTransformOptions = {
+const defaultTextTransformOptions = {
     join: ",",
 };
 
-const CreateTextTransform = (id, implementation) => {
+const createTextTransform = (id, implementation) => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -78,7 +78,7 @@ const CreateTextTransform = (id, implementation) => {
 
 // Text Transform: Links to Comma Separated Domain Array
 
-OnLoadTasks.push(() => {
+onLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -115,13 +115,13 @@ OnLoadTasks.push(() => {
             out.push(dom[1].replace(reDomainCleanup, ""));
         }
 
-        return [out.sort(), warn, DefaultTextTransformOptions];
+        return [out.sort(), warn, defaultTextTransformOptions];
 
     };
 
     // ------------------------------------------------------------------------------------------------------------- //
 
-    CreateTextTransform("links-to-domains", handler);
+    createTextTransform("links-to-domains", handler);
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -131,7 +131,7 @@ OnLoadTasks.push(() => {
 
 // Text Transform:  Merge Comma Separated Domain Array
 
-OnLoadTasks.push(() => {
+onLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -172,13 +172,13 @@ OnLoadTasks.push(() => {
         if (count === 1)
             warn.push("Only one array found!");
 
-        return [out.sort(), warn, DefaultTextTransformOptions];
+        return [out.sort(), warn, defaultTextTransformOptions];
 
     };
 
     // ------------------------------------------------------------------------------------------------------------- //
 
-    CreateTextTransform("merge-domains", handler);
+    createTextTransform("merge-domains", handler);
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -190,7 +190,7 @@ OnLoadTasks.push(() => {
 
 // TODO: Quadratic running time, can this be optimized?
 
-OnLoadTasks.push(() => {
+onLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -236,13 +236,13 @@ OnLoadTasks.push(() => {
                 out.push(d);
         }
 
-        return [out.sort(), warn, DefaultTextTransformOptions];
+        return [out.sort(), warn, defaultTextTransformOptions];
 
     };
 
     // ------------------------------------------------------------------------------------------------------------- //
 
-    CreateTextTransform("unmerge-domains", handler);
+    createTextTransform("unmerge-domains", handler);
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -252,7 +252,7 @@ OnLoadTasks.push(() => {
 
 // Text Transform:  Unicode Escape
 
-OnLoadTasks.push(() => {
+onLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -274,13 +274,13 @@ OnLoadTasks.push(() => {
             out.push(chars.join(""));
         }
 
-        return [out, warn, { join: "\n" }];
+        return [out, warn, Object.assign({}, defaultTextTransformOptions, { join: "\n" })];
 
     };
 
     // ------------------------------------------------------------------------------------------------------------- //
 
-    CreateTextTransform("unicode-escape", handler);
+    createTextTransform("unicode-escape", handler);
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -289,7 +289,7 @@ OnLoadTasks.push(() => {
 // ----------------------------------------------------------------------------------------------------------------- //
 
 window.onload = () => {
-    for (const f of OnLoadTasks)
+    for (const f of onLoadTasks)
         f();
 };
 
