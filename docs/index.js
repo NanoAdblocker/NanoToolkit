@@ -4,9 +4,13 @@
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
-const TaskOnLoad = [];
+const OnLoadTasks = [];
 
 // ----------------------------------------------------------------------------------------------------------------- //
+
+const DefaultTextTransformOptions = {
+    join: ",",
+};
 
 const CreateTextTransform = (id, implementation) => {
 
@@ -30,7 +34,7 @@ const CreateTextTransform = (id, implementation) => {
 
         const lines = $input.value.split("\n");
 
-        const [out, warn] = implementation(lines);
+        const [out, warn, opt] = implementation(lines);
 
         // --------------------------------------------------------------------------------------------------------- //
 
@@ -43,7 +47,7 @@ const CreateTextTransform = (id, implementation) => {
             result.push("");
         }
 
-        output = out.join(",");
+        output = out.join(opt.join);
         result.push("Output:");
         result.push(output);
 
@@ -74,7 +78,7 @@ const CreateTextTransform = (id, implementation) => {
 
 // Text Transform: Links to Comma Separated Domain Array
 
-TaskOnLoad.push(() => {
+OnLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -111,7 +115,7 @@ TaskOnLoad.push(() => {
             out.push(dom[1].replace(reDomainCleanup, ""));
         }
 
-        return [out.sort(), warn];
+        return [out.sort(), warn, DefaultTextTransformOptions];
 
     };
 
@@ -127,7 +131,7 @@ TaskOnLoad.push(() => {
 
 // Text Transform:  Merge Comma Separated Domain Array
 
-TaskOnLoad.push(() => {
+OnLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -168,7 +172,7 @@ TaskOnLoad.push(() => {
         if (count === 1)
             warn.push("Only one array found!");
 
-        return [out.sort(), warn];
+        return [out.sort(), warn, DefaultTextTransformOptions];
 
     };
 
@@ -186,7 +190,7 @@ TaskOnLoad.push(() => {
 
 // TODO: Quadratic running time, can this be optimized?
 
-TaskOnLoad.push(() => {
+OnLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -232,7 +236,7 @@ TaskOnLoad.push(() => {
                 out.push(d);
         }
 
-        return [out.sort(), warn];
+        return [out.sort(), warn, DefaultTextTransformOptions];
 
     };
 
@@ -248,7 +252,7 @@ TaskOnLoad.push(() => {
 
 // Text Transform:  Unicode Escape
 
-TaskOnLoad.push(() => {
+OnLoadTasks.push(() => {
 
     // ------------------------------------------------------------------------------------------------------------- //
 
@@ -270,7 +274,7 @@ TaskOnLoad.push(() => {
             out.push(chars.join(""));
         }
 
-        return [out, warn];
+        return [out, warn, { join: "\n" }];
 
     };
 
@@ -285,7 +289,7 @@ TaskOnLoad.push(() => {
 // ----------------------------------------------------------------------------------------------------------------- //
 
 window.onload = () => {
-    for (const f of TaskOnLoad)
+    for (const f of OnLoadTasks)
         f();
 };
 

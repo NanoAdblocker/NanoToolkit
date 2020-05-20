@@ -18,17 +18,20 @@ input[type="text"], textarea {
 }
 
 textarea {
+    font-family: monospace;
     min-height: 150px;
     resize: vertical;
+    white-space: pre;
 }
 
 pre {
+    font-family: monospace;
     overflow-x: auto;
 }
 
 @media (min-width: 600px) {
     input[type="text"], textarea {
-        font-size: 1.25em;
+        font-size: 1.5em;
     }
 
     h1 {
@@ -56,7 +59,7 @@ pre {
     }
 
     p, pre {
-        font-size: 1.5em;
+        font-size: 1.755em;
     }
 }
 
